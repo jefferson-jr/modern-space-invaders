@@ -25,30 +25,5 @@ class Particle {
     this.position.y += this.velocity.y;
     if (this.fades) this.opacity -= 0.01;
   }
-  
-  draw() {
-    c.save();
-    c.globalAlpha = this.opacity;
-    c.translate(
-      player.position.x + player.widht / 2,
-      player.position.y + player.height / 2
-    );
-    c.rotate(this.ratation);
-
-    c.translate(
-      -player.position.x - player.widht / 2,
-      -player.position.y - player.height / 2
-    );
-
-    c.drawImage(
-      this.image,
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-    );
-
-    c.restore();
-    
-  }
 }
+  
