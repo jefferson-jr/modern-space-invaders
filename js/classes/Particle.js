@@ -26,4 +26,3 @@ class Particle {
     if (this.fades) this.opacity -= 0.01;
   }
 }
-  
