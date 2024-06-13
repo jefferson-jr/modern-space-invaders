@@ -183,32 +183,80 @@ function animate() {
       particles.position.y = -particle.radius;
     }
 
-    if(particle.opacity <= 0) {
-        setTimeout(() => {
-            particles.splice(i, 1);
-        }, 0);
-    }else{
-        particle.update();
+    if (particle.opacity <= 0) {
+      setTimeout(() => {
+        particles.splice(i, 1);
+      }, 0);
+    } else {
+      particle.update();
     }
   });
 
   invaderProjectiles.forEach((invaderProjectile, index) => {
-    if(
-        invaderProjectile.position.y + invaderProjectile.height >= canvas.height
-    ){
-        setTimeout(() => {
-            invaderProjectiles.splice(index, 1);
-        }, 0)
+    if (
+      invaderProjectile.position.y + invaderProjectile.height >=
+      canvas.height
+    ) {
+      setTimeout(() => {
+        invaderProjectiles.splice(index, 1);
+      }, 0);
     } else invaderProjectile.update();
 
-    if(
-        rectangularCollision({
-            rectangle1: invaderProjectile,
-            rectangle2: player
-        })
-    ){
-        invaderProjectiles.splice(index, 1);
-        endGame();
+    if (
+      rectangularCollision({
+        rectangle1: invaderProjectile,
+        rectangle2: player
+      })
+    ) {
+      invaderProjectiles.splice(index, 1);
+      endGame();
     }
   });
+
+  for (let i = projectiles - 1; i >= 0; i--) {
+    const projectile = projectiles[i];
+
+    for (let j = bombs.length - 1; j >= 0; j--) {
+      const bomb = bombs[j];
+
+      if (
+        Math.hypot(
+          projectile.position.x - bomb.position.x,
+          projectile.position.y - bomb.position.y
+        ) <
+          projectile.radius + bomb.radius &&
+        !bomb.active
+      ) {
+        projectiles.splice(i, 1);
+        bombs.explode();
+      }
+    }
+
+    for (let j = powerUps.length - 1; j >= 0; j--) {
+      const powerUp = powerUps[j];
+
+      if (
+        Math.hypot(
+          projectile.position.x - powerUp.position.x,
+          projectile.position.y - powerUp.position.y
+        ) <
+        projectile.radius + powerUp.radius
+      ) {
+        projectiles.splice(i, 1);
+        powerUps.splice(j, 1);
+        player.powerUp = "Metralhadora";
+        audio.bonus.play();
+
+        setTimeout(() => {
+          player.powerUp = null;
+        }, 5000);
+      }
+    }
+
+    if(projectile.position.y + particles.radius <= 0) {
+        projectiles.splice(i, 1);
+    } else {
+        projectile.update();
+    }
+  }
 }
