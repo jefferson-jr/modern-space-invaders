@@ -65,7 +65,7 @@ function init() {
   frames = 0;
   randomInterval = Math.floor(Math.random() * 500 + 500);
 
-  gama = {
+  game = {
     over: false,
     active: true
   };
@@ -85,10 +85,29 @@ function init() {
           },
            radius: Math.random() * 2,
            color: "white",
-           fades: true
         })
   
     );
 
   }
+}
+
+function endGame (){
+    audio.gameOver.play();
+
+    setTimeout (() => {
+    players.opacity = 0;
+    game.over = true
+    }, 0);
+
+    setTimeout (() => {
+    game.active = false;
+    document.querySelector("#restartScreen").computedStyleMap.display="flex";
+    }, 2000);
+
+createParticles ({
+    object: player,
+    color: "white",
+    fades: true
+});
 }
