@@ -1,4 +1,4 @@
-class invader {
+class Invader {
   constructor({ position }) {
     this.velocity = {
       x: 0,
@@ -7,7 +7,6 @@ class invader {
 
     const image = new Image();
     image.src = "./img/invader.png";
-
     image.onload = () => {
       const scale = 1;
       this.image = image;
@@ -40,6 +39,7 @@ class invader {
 
   shoot(invaderProjectiles) {
     audio.enemyShoot.play();
+
     invaderProjectiles.push(
       new InvaderProjectile({
         position: {

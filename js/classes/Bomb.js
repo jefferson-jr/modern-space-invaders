@@ -4,8 +4,8 @@ class Bomb {
     this.position = position;
     this.velocity = velocity;
     this.radius = 0;
-    this.color = " ";
-    this, (opacity = 1);
+    this.color = "red";
+    this.opacity = 1;
     this.active = false;
 
     gsap.to(this, {
@@ -17,24 +17,25 @@ class Bomb {
     c.save();
     c.globalAlpha = this.opacity;
     c.beginPath();
-    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
+    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
     c.closePath();
     c.fillStyle = this.color;
     c.fill();
     c.restore();
   }
+
   update() {
+    this.draw();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-    this.draw();
 
     if (
-      this.position.x + this.radius + this.velecity.x >= Canvas.widht ||
+      this.position.x + this.radius + this.velocity.x >= canvas.width ||
       this.position.x - this.radius + this.velocity.x <= 0
     ) {
       this.velocity.x = -this.velocity.x;
     } else if (
-      this.position.y + this.radius + this.velocity.y >= Canvas.height ||
+      this.position.y + this.radius + this.velocity.y >= canvas.height ||
       this.position.y - this.radius + this.velocity.y <= 0
     )
       this.velocity.y = -this.velocity.y;
@@ -68,15 +69,15 @@ class PowerUp {
 
   draw() {
     c.beginPath();
-    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
+    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
     c.fillStyle = "yellow";
     c.fill();
     c.closePath();
   }
 
   update() {
+    this.draw();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-    this.draw();
   }
 }

@@ -1,19 +1,18 @@
-howler.volum(0.5);
+Howler.volume(0.5);
 const audio = {
   backgroundMusic: new Howl({
     src: "./audio/backgroundMusic.wav",
     loop: true
   }),
   bomb: new Howl({
-    src: "./audio/bomb.MP3"
+    src: "./audio/bomb.mp3"
   }),
   bonus: new Howl({
-    src: "./audio/bonus.MP3",
+    src: "./audio/bonus.mp3",
     volume: 0.8
   }),
   enemyShoot: new Howl({
-    src: "./audio/enemyShoot.wav",
-    volume: 0.8
+    src: "./audio/enemyShoot.wav"
   }),
   explode: new Howl({
     src: "./audio/explode.wav"
