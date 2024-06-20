@@ -377,4 +377,52 @@ function animate() {
     player.position.x = 0;
     player.rotation = 0;
   }
+
+  if(frames % randomInterval === 0) {
+    spawnBuffer = spawnBuffer < 0 ? 100 : spawnBuffer;
+    grids.push(new Grid());
+    randomInterval = Math.floor(Math.random() * 500 + spawnBuffer);
+    frames = 0;
+    spawnBuffer -= 100;
+  }
+
+  if(
+    keys.space.pressed &&
+    player.powerUp === "metralhadora" &&
+    frames % 2 === 0 &&
+    !game.over
+  ) {
+    if(frames % 6 === 0) audio.shoot.play();
+    projectiles.push(
+      new projectiles({
+        position: {
+          x: player.position.x + player.width / 2,
+          y: player.position.y
+        },
+        velocity: {
+          x: 0,
+          y: -10
+        },
+        color: "yellow"
+      })
+    );
+  }
+  frames++;
 }
+
+document.querySelector('#startButton').addEventListener("click", () => {
+  audio.backgroundMusic.play();
+  audio.start.play();
+
+  document.querySelector("#startScreen").style.diplay = "none";
+  document.querySelector("#scoreContainer").style.display = "block";
+  init();
+  animate();
+});
+
+document.querySelector("#restartScreen").addEventListener("click", () => {
+audio.select.play();
+document.querySelector("#restartScreen").style.display = "none";
+init();
+animate();
+});
